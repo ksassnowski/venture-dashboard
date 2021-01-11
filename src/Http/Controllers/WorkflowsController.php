@@ -6,7 +6,7 @@ use Illuminate\Contracts\View\View;
 use Sassnowski\Venture\Models\Workflow;
 use Sassnowski\Venture\Models\WorkflowJob;
 
-class WorkflowsController
+class WorkflowsController extends Controller
 {
     public function show(Workflow $workflow): View
     {
