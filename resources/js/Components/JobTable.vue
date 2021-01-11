@@ -38,7 +38,6 @@ export default {
     computed: {
         headers() {
             return [
-                { text: "", align: "left" },
                 { text: "Name", align: "left" },
                 { text: "Finished At", align: "right" },
                 { text: "Failed At", align: "right" },
