@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "df52973588e5cd6323f42cd7fc08801a",
+    "content-hash": "7ba705365f2571d5f05bd7df17f7fad5",
     "packages": [
         {
             "name": "brick/math",
@@ -1544,16 +1544,16 @@
         },
         {
             "name": "sassnowski/venture",
-            "version": "2.x-dev",
+            "version": "2.0.0",
             "source": {
                 "type": "git",
                 "url": "https://github.com/ksassnowski/venture.git",
-                "reference": "e25fe4e06341f924a1374a341bdf9bc5116ac05c"
+                "reference": "bd98d1eaac3f9da364f876d399b0936a2c5de802"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/ksassnowski/venture/zipball/e25fe4e06341f924a1374a341bdf9bc5116ac05c",
-                "reference": "e25fe4e06341f924a1374a341bdf9bc5116ac05c",
+                "url": "https://api.github.com/repos/ksassnowski/venture/zipball/bd98d1eaac3f9da364f876d399b0936a2c5de802",
+                "reference": "bd98d1eaac3f9da364f876d399b0936a2c5de802",
                 "shasum": ""
             },
             "require": {
@@ -1601,7 +1601,7 @@
             "description": "A package to manage complex workflows built on top of Laravel's queue.",
             "support": {
                 "issues": "https://github.com/ksassnowski/venture/issues",
-                "source": "https://github.com/ksassnowski/venture/tree/2.x"
+                "source": "https://github.com/ksassnowski/venture/tree/2.0.0"
             },
             "funding": [
                 {
@@ -1609,7 +1609,7 @@
                     "type": "github"
                 }
             ],
-            "time": "2021-01-11T05:04:49+00:00"
+            "time": "2021-01-12T08:03:01+00:00"
         },
         {
             "name": "swiftmailer/swiftmailer",
@@ -7080,9 +7080,7 @@
     ],
     "aliases": [],
     "minimum-stability": "stable",
-    "stability-flags": {
-        "sassnowski/venture": 20
-    },
+    "stability-flags": [],
     "prefer-stable": false,
     "prefer-lowest": false,
     "platform": [],

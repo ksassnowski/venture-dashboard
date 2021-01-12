@@ -10,7 +10,7 @@
         }
     ],
     "require": {
-        "sassnowski/venture": "2.x-dev",
+        "sassnowski/venture": "^2.0",
         "watson/active": "^5.0|^6.0"
     },
     "autoload": {
@@ -23,7 +23,6 @@
             "Sassnowski\\Venture\\Dashboard\\Tests\\": "tests/"
         }
     },
-    "minimum-stability": "stable",
     "extra": {
         "laravel": {
             "providers": [
