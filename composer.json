@@ -10,7 +10,7 @@
         }
     ],
     "require": {
-        "sassnowski/venture": "^2.0|3.0.0-RC1",
+        "sassnowski/venture": "^3.0",
         "watson/active": "^5.0|^6.0"
     },
     "autoload": {
