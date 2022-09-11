@@ -1,12 +1,13 @@
-<?php declare(strict_types=1);
+<?php
+
+declare(strict_types=1);
 
 namespace Sassnowski\Venture\Dashboard\Http\Controllers;
 
-use Illuminate\Contracts\View\View;
 use Sassnowski\Venture\Models\Workflow;
 use Sassnowski\Venture\Models\WorkflowJob;
 
-class WorkflowsController extends Controller
+class WorkflowsController
 {
     public function show(Workflow $workflow)
     {
@@ -20,7 +21,7 @@ class WorkflowsController extends Controller
                     ['text' => 'Failed at', 'align' => 'right'],
                 ],
                 'items' => $workflow->jobs
-                    ->map(fn(WorkflowJob $job) => [
+                    ->map(fn (WorkflowJob $job) => [
                         $job->name,
                         optional($job->finished_at)->format('Y-m-d H:i'),
                         optional($job->failed_at)->format('Y-m-d H:i'),

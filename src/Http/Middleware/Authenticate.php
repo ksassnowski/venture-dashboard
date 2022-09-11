@@ -1,4 +1,6 @@
-<?php declare(strict_types=1);
+<?php
+
+declare(strict_types=1);
 
 namespace Sassnowski\Venture\Dashboard\Http\Middleware;
 
@@ -10,6 +12,10 @@ class Authenticate
 {
     public function handle(Request $request, Closure $next)
     {
-        return Dashboard::check($request) ? $next($request) : abort(403);
+        if (! Dashboard::check($request)) {
+            abort(403);
+        }
+
+        return  $next($request);
     }
 }

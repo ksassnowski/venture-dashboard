@@ -1,4 +1,6 @@
-<?php declare(strict_types=1);
+<?php
+
+declare(strict_types=1);
 
 namespace Sassnowski\Venture\Dashboard\Tests\Http\Middleware;
 
@@ -6,8 +8,8 @@ use Generator;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
 use Sassnowski\Venture\Dashboard\Dashboard;
-use Sassnowski\Venture\Dashboard\Tests\TestCase;
 use Sassnowski\Venture\Dashboard\Http\Middleware\Authenticate;
+use Sassnowski\Venture\Dashboard\Tests\TestCase;
 
 class AuthenticateTest extends TestCase
 {
