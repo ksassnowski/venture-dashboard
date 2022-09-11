@@ -1,21 +1,31 @@
 {
-  "scripts": {
-    "dev": "npm run development",
-    "development": "cross-env NODE_ENV=development node_modules/webpack/bin/webpack.js --progress --hide-modules --config=node_modules/laravel-mix/setup/webpack.config.js",
-    "watch": "npm run development -- --watch",
-    "prod": "npm run production",
-    "production": "cross-env NODE_ENV=production node_modules/webpack/bin/webpack.js --no-progress --hide-modules --config=node_modules/laravel-mix/setup/webpack.config.js"
-  },
-  "devDependencies": {
-    "@inertiajs/inertia": "^0.6.2",
-    "@inertiajs/inertia-vue": "^0.4.2",
-    "@inertiajs/progress": "^0.2.2",
-    "cross-env": "^7.0.2",
-    "cytoscape": "^3.17.0",
-    "dayjs": "^1.9.6",
-    "laravel-mix": "^5.0.9",
-    "tailwindcss": "^1.9.6",
-    "vue": "^2.6.12",
-    "vue-template-compiler": "^2.6.12"
-  }
+    "private": true,
+    "scripts": {
+        "dev": "npm run development",
+        "development": "mix",
+        "watch": "mix watch",
+        "watch-poll": "mix watch -- --watch-options-poll=1000",
+        "hot": "mix watch --hot",
+        "prod": "npm run production",
+        "production": "mix --production"
+    },
+    "devDependencies": {
+        "axios": "^0.21.1",
+        "chart.js": "^2.5.0",
+        "cytoscape": "^3.22.1",
+        "laravel-mix": "^6.0.13",
+        "lodash": "^4.17.19",
+        "moment": "^2.29.4",
+        "moment-timezone": "^0.5.35",
+        "phpunserialize": "1.*",
+        "resolve-url-loader": "^5.0.0",
+        "sass": "^1.26.3",
+        "sass-loader": "^11.0.1",
+        "tailwindcss": "^3.1.8",
+        "vue": "^2.5.7",
+        "vue-json-pretty": "^1.4.1",
+        "vue-loader": "^15.9.6",
+        "vue-router": "^3.0.1",
+        "vue-template-compiler": "^2.5.21"
+    }
 }

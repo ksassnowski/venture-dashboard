@@ -10,8 +10,7 @@
         }
     ],
     "require": {
-        "sassnowski/venture": "^3.0",
-        "watson/active": "^5.0|^6.0"
+        "sassnowski/venture": "^4.0"
     },
     "autoload": {
         "psr-4": {

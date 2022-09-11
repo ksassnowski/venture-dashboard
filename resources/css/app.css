@@ -1,3 +1,8 @@
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
+
+.router-link-exact-active {
+    --tw-text-opacity: 1;
+    color: rgb(255 45 32 / var(--tw-text-opacity));
+}

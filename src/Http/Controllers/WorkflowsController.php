@@ -8,9 +8,9 @@ use Sassnowski\Venture\Models\WorkflowJob;
 
 class WorkflowsController extends Controller
 {
-    public function show(Workflow $workflow): View
+    public function show(Workflow $workflow)
     {
-        return view('venture-dashboard::workflows.show', [
+        return [
             'workflow' => $workflow,
             'graph' => $workflow->asAdjacencyList(),
             'table' => [
@@ -20,38 +20,32 @@ class WorkflowsController extends Controller
                     ['text' => 'Failed at', 'align' => 'right'],
                 ],
                 'items' => $workflow->jobs
-                    ->map(fn (WorkflowJob $job) => [
+                    ->map(fn(WorkflowJob $job) => [
                         $job->name,
                         optional($job->finished_at)->format('Y-m-d H:i'),
                         optional($job->failed_at)->format('Y-m-d H:i'),
-                    ])
+                    ]),
             ],
-        ]);
+        ];
     }
 
-    public function running(): View
+    public function running()
     {
-        return view('venture-dashboard::workflows.index', [
-            'workflows' => Workflow::whereNull('finished_at')
-                ->where('jobs_failed', 0)
-                ->get(),
-        ]);
+        return Workflow::whereNull('finished_at')
+            ->where('jobs_failed', 0)
+            ->get();
     }
 
-    public function failed(): View
+    public function failed()
     {
-        return view('venture-dashboard::workflows.failed', [
-            'workflows' => Workflow::with('jobs')
-                ->whereNull('finished_at')
-                ->where('jobs_failed', '>', 0)
-                ->get(),
-        ]);
+        return Workflow::with('jobs')
+            ->whereNull('finished_at')
+            ->where('jobs_failed', '>', 0)
+            ->get();
     }
 
-    public function finished(): View
+    public function finished()
     {
-        return view('venture-dashboard::workflows.finished', [
-            'workflows' => Workflow::whereNotNull('finished_at')->get(),
-        ]);
+        return Workflow::whereNotNull('finished_at')->get();
     }
 }

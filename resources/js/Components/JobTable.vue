@@ -15,8 +15,8 @@
 </template>
 
 <script>
-import dayjs from "dayjs";
 
+import moment from 'moment';
 import ExpandableTable from "@/Components/ExpandableTable";
 import StackTrace from "@/Components/StackTrace";
 
@@ -50,10 +50,10 @@ export default {
                 columns: [
                     job.name,
                     job.finished_at
-                        ? dayjs(job.finished_at).format("YYYY-MM-DD HH:mm")
+                        ? moment(job.finished_at).format("YYYY-MM-DD HH:mm")
                         : null,
                     job.failed_at
-                        ? dayjs(job.failed_at).format("YYYY-MM-DD HH:mm")
+                        ? moment(job.failed_at).format("YYYY-MM-DD HH:mm")
                         : null,
                 ],
                 data: job,
