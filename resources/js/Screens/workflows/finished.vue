@@ -32,7 +32,7 @@
 
                 this.$http.get(VentureDashboard.basePath + '/api/workflows/finished')
                     .then(response => {
-                        this.workflows = response.data;
+                        this.workflows = response.data.data;
 
                         this.ready = true;
                     });

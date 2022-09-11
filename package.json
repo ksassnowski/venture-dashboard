@@ -15,6 +15,7 @@
         "cytoscape": "^3.22.1",
         "laravel-mix": "^6.0.13",
         "lodash": "^4.17.19",
+        "mermaid": "^9.1.6",
         "moment": "^2.29.4",
         "moment-timezone": "^0.5.35",
         "phpunserialize": "1.*",

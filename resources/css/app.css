@@ -6,3 +6,29 @@
     --tw-text-opacity: 1;
     color: rgb(255 45 32 / var(--tw-text-opacity));
 }
+
+.alert {
+    position: relative;
+    padding: 0.75rem 1.25rem;
+    margin-bottom: 1rem;
+    border: 1px solid transparent;
+    border-radius: 0.25rem;
+}
+
+code {
+    font-size: 87.5%;
+    color: #e83e8c;
+    word-wrap: break-word;
+}
+
+.alert-warning {
+    color: #5c4918;
+    background-color: #efe8d5;
+    border-color: #e9dfc5;
+}
+.alert-warning hr {
+    border-top-color: #e2d5b3;
+}
+.alert-warning .alert-link {
+    color: #34290d;
+}

@@ -6,8 +6,6 @@ export default {
     data() {
         return {
             workflow: null,
-            graph: null,
-            table: null,
         };
     },
 
@@ -19,8 +17,12 @@ export default {
 
         this.loadWorkflow();
 
-        const container = document.getElementById('mermaid');
-        console.log(container);
+        // setTimeout(() => {
+        //     console.log('timeout');
+        //     this.workflow.asd = `A[My NEW] --> B[Second One]
+        //         A --> C[Third]
+        //         B --> C`;
+        // }, 2000);
     },
 
     methods: {
@@ -29,10 +31,8 @@ export default {
          */
         loadWorkflow() {
             this.$http.get(VentureDashboard.basePath + '/api/workflows/' + this.$route.params.id)
-                .then(response => {
-                    this.workflow = response.data.workflow;
-                    this.graph = response.data.graph;
-                    this.table = response.data.table;
+                .then(({ data: { data: workflow } }) => {
+                    this.workflow = workflow;
                 });
         },
     }
@@ -53,8 +53,15 @@ export default {
         </div>
 
         <div v-if="workflow" class="d-flex align-items-center justify-content-center card-bg-secondary p-5 bottom-radius">
+            <h2>{{ workflow.name  }}</h2>
+
             <section class="bg-white bg-opacity-25 rounded-lg shadow mb-6" style="height: 450px">
-                <workflow-graph :graph="graph"></workflow-graph>
+                    <workflow-mermaid-graph
+                        :id="workflow.id"
+                        :definition="workflow.definition"
+                        :relations="workflow.relations"
+                        :status="workflow.status"
+                    />
             </section>
 
             <section>

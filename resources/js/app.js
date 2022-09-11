@@ -4,13 +4,13 @@ import VueRouter from 'vue-router';
 import Base from './base';
 
 import WorkflowGraph from "@/Components/WorkflowGraph";
+import WorkflowMermaidGraph from "@/Components/WorkflowMermaidGraph";
 import JobTable from "@/Components/JobTable";
 import axios from "axios";
 
 Vue.component("workflow-graph", WorkflowGraph);
+Vue.component("workflow-mermaid-graph", WorkflowMermaidGraph);
 Vue.component("job-table", JobTable);
-
-VentureDashboard
 
 /*
  * Packages
