@@ -32,3 +32,36 @@ code {
 .alert-warning .alert-link {
     color: #34290d;
 }
+
+.graph {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+/** Graph states **/
+
+.graph .status-pending > rect{
+    fill: #ebf8ff !important;
+    stroke: #4299e1 !important;
+    color: #4299e1 !important;
+    stroke-dasharray: 5 5;
+}
+
+.graph .status-finished > rect{
+    fill: #e6fffa !important;
+    stroke: #234e52 !important;
+    color: #234e52 !important;
+}
+
+.graph .status-processing > rect{
+    fill: #fffaf0 !important;
+    stroke: #c05621 !important;
+    color: #c05621 !important;
+}
+
+.graph .status-failed > rect{
+    fill: #fff5f5 !important;
+    stroke: #c53030 !important;
+    color: #c53030 !important;
+}
