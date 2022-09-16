@@ -1,5 +1,5 @@
 <template>
-    <div class="text-gray-800 text-sm font-mono">
+    <div class="text-gray-800 text-sm">
         <div
             v-for="(line, i) in lines"
             :key="i"
