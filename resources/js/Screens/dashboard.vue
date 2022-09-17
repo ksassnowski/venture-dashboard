@@ -90,8 +90,24 @@
         },
 
         computed: {
+            totalPendingState() {
+                if (!this.ready) {
+                    return 'normal';
+                }
+
+                if (this.stats.totalPending === 0 && this.stats.totalNonStarted === 0) {
+                    return 'success';
+                }
+
+                return 'normal';
+            },
+
             nonStartedState() {
                 if (!this.ready) {
+                    return 'normal';
+                }
+
+                if (this.stats.totalPending === 0) {
                     return 'normal';
                 }
 
@@ -136,7 +152,7 @@
         </div>
 
         <div class="grid grid-cols-5 gap-4 mb-5">
-            <stats-card title="Total Pending Workflows" :loading="loading">{{ stats.totalPending }}</stats-card>
+            <stats-card title="Total Pending Workflows" :loading="loading" :state="totalPendingState">{{ stats.totalPending }}</stats-card>
             <stats-card title="Non-Started Workflows" :loading="loading" :state="nonStartedState">{{ stats.totalNonStarted }}</stats-card>
             <stats-card :title="`Failures in the past ${this.period}`" :state="failuresState" :loading="loading">{{ stats.failed }}</stats-card>
             <stats-card :title="`Successes in the past ${this.period}`" :loading="loading">{{ stats.successful }}</stats-card>
