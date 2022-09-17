@@ -3,14 +3,17 @@ import Routes from './routes';
 import VueRouter from 'vue-router';
 import Base from './base';
 
-import WorkflowGraph from "@/Components/WorkflowGraph";
-import WorkflowMermaidGraph from "@/Components/WorkflowMermaidGraph";
-import JobTable from "@/Components/JobTable";
 import axios from "axios";
+
+import WorkflowGraph from '@/Components/WorkflowGraph';
+import WorkflowMermaidGraph from '@/Components/WorkflowMermaidGraph';
+import JobTable from '@/Components/JobTable';
+import StatsCard from '@/Components/StatsCard';
 
 Vue.component("workflow-graph", WorkflowGraph);
 Vue.component("workflow-mermaid-graph", WorkflowMermaidGraph);
 Vue.component("job-table", JobTable);
+Vue.component("stats-card", StatsCard);
 
 /*
  * Packages

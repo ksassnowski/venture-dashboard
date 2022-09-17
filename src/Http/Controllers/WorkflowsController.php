@@ -6,6 +6,9 @@ namespace Sassnowski\Venture\Dashboard\Http\Controllers;
 
 use Sassnowski\Venture\Dashboard\Http\Resources\WorkflowListItemResource;
 use Sassnowski\Venture\Dashboard\Http\Resources\WorkflowResource;
+use Sassnowski\Venture\Dashboard\Queries\FailedWorkflowsQuery;
+use Sassnowski\Venture\Dashboard\Queries\PendingWorkflowsQuery;
+use Sassnowski\Venture\Dashboard\Queries\SuccessfulWorkflowsQuery;
 use Sassnowski\Venture\Models\Workflow;
 
 class WorkflowsController
@@ -19,10 +22,7 @@ class WorkflowsController
 
     public function running()
     {
-        $workflows = Workflow::whereNull('finished_at')
-            ->where('jobs_failed', 0)
-            ->orderBy('created_at', 'asc')
-            ->get();
+        $workflows = (new PendingWorkflowsQuery())->get();
 
         return WorkflowListItemResource::collection(
             $workflows
@@ -31,11 +31,7 @@ class WorkflowsController
 
     public function failed()
     {
-        $workflows = Workflow::query()
-            ->whereNull('finished_at')
-            ->where('jobs_failed', '>', 0)
-            ->orderBy('finished_at', 'desc')
-            ->get();
+        $workflows = (new FailedWorkflowsQuery())->get();
 
         return WorkflowListItemResource::collection(
             $workflows
@@ -44,9 +40,7 @@ class WorkflowsController
 
     public function finished()
     {
-        $workflows = Workflow::whereNotNull('finished_at')
-            ->orderBy('finished_at', 'desc')
-            ->get();
+        $workflows = (new SuccessfulWorkflowsQuery())->get();
 
         return WorkflowListItemResource::collection(
             $workflows

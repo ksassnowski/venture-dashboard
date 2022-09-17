@@ -4,6 +4,9 @@ export default {
     methods: {
         formatDatetime(date) {
             return moment(date).format("YYYY-MM-DD HH:mm");
+        },
+        calendarDatetime(date) {
+            return moment(date).calendar();
         }
     },
 };
