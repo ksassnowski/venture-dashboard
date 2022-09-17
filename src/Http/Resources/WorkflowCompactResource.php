@@ -8,15 +8,12 @@ use Sassnowski\Venture\Models\Workflow;
 /**
  * @mixin Workflow
  */
-class WorkflowResource extends JsonResource
+class WorkflowCompactResource extends JsonResource
 {
-    public function toArray($request)
+    public function toArray($request): array
     {
         return [
-            ...$this->resource->toArray(),
             'isFinished' => $this->isFinished(),
-            'definition' => WorkflowDefinitionResource::make($this->resource->jobs),
-            'relations' => WorkflowRelationsResource::make($this->resource->jobs),
             'status' => WorkflowStatusResource::make($this->resource->jobs),
         ];
     }

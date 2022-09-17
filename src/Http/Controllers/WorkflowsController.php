@@ -21,6 +21,7 @@ class WorkflowsController
     {
         $workflows = Workflow::whereNull('finished_at')
             ->where('jobs_failed', 0)
+            ->orderBy('created_at', 'asc')
             ->get();
 
         return WorkflowListItemResource::collection(
@@ -33,6 +34,7 @@ class WorkflowsController
         $workflows = Workflow::query()
             ->whereNull('finished_at')
             ->where('jobs_failed', '>', 0)
+            ->orderBy('finished_at', 'desc')
             ->get();
 
         return WorkflowListItemResource::collection(
@@ -42,7 +44,9 @@ class WorkflowsController
 
     public function finished()
     {
-        $workflows = Workflow::whereNotNull('finished_at')->get();
+        $workflows = Workflow::whereNotNull('finished_at')
+            ->orderBy('finished_at', 'desc')
+            ->get();
 
         return WorkflowListItemResource::collection(
             $workflows

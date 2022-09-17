@@ -6,23 +6,25 @@ export default {
     data() {
         return {
             workflow: null,
+            autoRefresh: false,
         };
     },
 
     /**
      * Prepare the component.
      */
-    mounted() {
+    async mounted() {
         document.title = "Venture Dashboard - Workflows";
 
-        this.loadWorkflow();
+        await this.loadWorkflow();
 
-        // setTimeout(() => {
-        //     console.log('timeout');
-        //     this.workflow.asd = `A[My NEW] --> B[Second One]
-        //         A --> C[Third]
-        //         B --> C`;
-        // }, 2000);
+        this.autoRefresh = ! this.workflow.isFinished;
+
+        this.refresh();
+    },
+
+    destroyed() {
+        clearTimeout(this.timeout);
     },
 
     methods: {
@@ -30,10 +32,38 @@ export default {
          * Load the monitored tags.
          */
         loadWorkflow() {
-            this.$http.get(VentureDashboard.basePath + '/api/workflows/' + this.$route.params.id)
+            return this.$http.get(`${VentureDashboard.basePath}/api/workflows/${this.$route.params.id}`)
                 .then(({ data: { data: workflow } }) => {
                     this.workflow = workflow;
                 });
+        },
+
+        /**
+         * Load the workers stats.
+         */
+        loadJobs() {
+            return this.$http.get(`${VentureDashboard.basePath}/api/workflows/${this.$route.params.id}/jobs`)
+                .then(({ data: { data: workflow } }) => {
+                    this.workflow = { ...this.workflow, ...workflow };
+                });
+        },
+
+        /**
+         * Refresh the stats every period of time.
+         */
+        refresh() {
+            this.timeout = setTimeout(async ()  => {
+
+                if (this.autoRefresh) {
+                    await this.loadJobs();
+
+                    if (this.workflow.isFinished) {
+                        this.autoRefresh = false;
+                    }
+                }
+
+                this.refresh();
+            }, 2000);
         },
     }
 }
@@ -41,9 +71,17 @@ export default {
 
 <template>
     <div>
-        <h1 class="text-2xl text-gray-900 mb-2">
-            Workflow #{{ $route.params.id }}
-        </h1>
+        <div class="container">
+            <label for="auto-refresh" class="inline-flex relative items-center cursor-pointer float-right">
+                <input type="checkbox" value="" id="auto-refresh" class="sr-only peer" :disabled="!workflow" v-model="autoRefresh">
+                <div class="w-11 h-6 bg-gray-200 peer-focus:outline-none peer-focus:ring-4 peer-focus:ring-blue-300 dark:peer-focus:ring-blue-800 rounded-full peer dark:bg-gray-700 peer-checked:after:translate-x-full peer-checked:after:border-white after:content-[''] after:absolute after:top-[2px] after:left-[2px] after:bg-white after:border-gray-300 after:border after:rounded-full after:h-5 after:w-5 after:transition-all dark:border-gray-600 peer-checked:bg-blue-600"></div>
+                <span class="ml-3 text-sm font-medium text-gray-900 dark:text-gray-300">Auto-Refresh</span>
+            </label>
+
+            <h1 class="text-2xl text-gray-900 mb-2">
+                Workflow #{{ $route.params.id }}
+            </h1>
+        </div>
 
         <div v-if="workflow == null" class="d-flex align-items-center justify-content-center card-bg-secondary p-5 bottom-radius">
     <!--        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20" class="icon spin mr-2 fill-text-color">-->
@@ -53,7 +91,9 @@ export default {
         </div>
 
         <div v-if="workflow" class="d-flex align-items-center justify-content-center card-bg-secondary p-5 bottom-radius">
-            <h2>{{ workflow.name  }}</h2>
+            <h2 class="text-xl text-gray-900 mb-2">
+                <b>Name:</b> {{ workflow.name  }}
+            </h2>
 
             <section class="bg-white bg-opacity-25 rounded-lg shadow mb-6" style="height: 450px">
                     <workflow-mermaid-graph

@@ -20,9 +20,9 @@ php artisan venture:dashboard:install // TODO
 
 ## Contribute: To-do
 
-- [ ] JsonResources for API endpoints
+- [x] JsonResources for API endpoints
+- [x] Replace cytoscape for mermaid
 - [ ] Improve Job's name (php unserialize)
-- [ ] Replace cytoscape for mermaid? (maybe)
 - [ ] Live-refresh on unfinished Workflow
 - [ ] Add overview stats:
   - Workflows created in the last day

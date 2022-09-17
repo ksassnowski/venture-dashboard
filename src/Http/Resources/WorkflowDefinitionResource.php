@@ -23,7 +23,7 @@ class WorkflowDefinitionResource extends JsonResource
     public function toArray($request)
     {
         return $this->resource
-            ->map(fn(WorkflowJob $job) => [
+            ->map(fn (WorkflowJob $job) => [
                 'id' => $job->uuid,
                 'name' => $this->extractJobName($job->job),
             ])
