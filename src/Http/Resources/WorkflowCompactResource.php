@@ -15,6 +15,7 @@ class WorkflowCompactResource extends JsonResource
         return [
             'isFinished' => $this->isFinished(),
             'status' => WorkflowStatusResource::make($this->resource->jobs),
+            'jobs' => JobResource::collection($this->whenLoaded('jobs')),
         ];
     }
 }

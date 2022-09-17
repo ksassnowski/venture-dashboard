@@ -21,7 +21,7 @@
             <template v-for="(item, i) in items">
                 <tr
                     class="transition duration-150 hover:bg-gray-100 border-b border-gray-200"
-                    :class="{ 'bg-gray-100': expanded === i }"
+                    :class="[item.style]"
                     @click="() => item.expandable && toggleExpand(i)"
                     :key="i"
                 >
