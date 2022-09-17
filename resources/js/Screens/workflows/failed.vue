@@ -79,7 +79,6 @@
                 <tr class="border-b border-gray-300">
                     <th class="text-left pl-6 pr-2 pt-2 pb-2 font-normal">ID</th>
                     <th class="text-left px-2 pt-2 pb-2 font-normal">Name</th>
-                    <th class="text-left px-2 pt-2 pb-2 font-normal text-right">Failures</th>
                     <th class="text-left pl-2 pr-6 pt-2 pb-2 font-normal">Started at</th>
                     <th class="text-left pl-2 pr-6 pt-2 pb-2 font-normal">Last failure at</th>
                 </tr>
@@ -96,13 +95,8 @@
                             {{ workflow.name }} #{{ workflow.id }}
                         </router-link>
                     </td>
-                    <td class="px-2 py-2 text-right">
-                        {{ workflow.jobs_failed }}
-                    </td>
-                    <td class="pl-2 pr-6 py-2">{{ formatDatetime(workflow.created_at) }}</td>
-                    <td class="pl-2 pr-6 py-2">
-                        <blockquote>workflow.jobs->whereNotNull('failed_at')->sortByDesc('failed_at')->first()->failed_at->format('Y-m-d H:i')</blockquote>
-                    </td>
+                    <td class="pl-2 pr-6 py-2">{{ calendarDatetime(workflow.created_at) }}</td>
+                    <td class="pl-2 pr-6 py-2">{{ calendarDatetime(workflow.last_failed_at) }}</td>
                 </tr>
                 </tbody>
             </table>

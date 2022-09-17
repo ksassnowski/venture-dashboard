@@ -2,14 +2,16 @@
 
 namespace Sassnowski\Venture\Dashboard\Queries;
 
-use Illuminate\Database\Eloquent\Builder;
+use Illuminate\Database\Eloquent\Builder as EloquentBuilder;
 use Illuminate\Database\Eloquent\Collection;
+use Illuminate\Database\Query\Builder;
 use Illuminate\Support\Carbon;
 use Sassnowski\Venture\Models\Workflow;
+use Sassnowski\Venture\Models\WorkflowJob;
 
 class FailedWorkflowsQuery
 {
-    private Builder $query;
+    private EloquentBuilder $query;
 
     public function __construct()
     {
@@ -32,6 +34,19 @@ class FailedWorkflowsQuery
     public function get(): Collection
     {
         return $this->query
+            ->addSelect([
+                'last_failed_at' => function (Builder $query) {
+                    $workflowTable = (new Workflow())->getTable();
+                    $jobsTable = (new WorkflowJob())->getTable();
+
+                    $query
+                        ->select("{$jobsTable}.failed_at")
+                        ->from($jobsTable)
+                        ->whereColumn("{$workflowTable}.id", "{$jobsTable}.workflow_id")
+                        ->orderBy('failed_at', 'desc')
+                        ->limit(1);
+                },
+            ])
             ->orderBy('created_at', 'desc')
             ->get();
     }
