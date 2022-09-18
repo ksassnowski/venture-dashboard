@@ -20,21 +20,19 @@ php artisan venture:dashboard:install // TODO
 
 ## Contribute: To-do
 
-- [x] JsonResources for API endpoints
-- [x] Replace cytoscape for mermaid
-- [ ] Improve Job's name (php unserialize)
-- [ ] Live-refresh on unfinished Workflow
-- [ ] Add overview stats:
-  - Workflows created in the last day
-  - Workflows finished in the last day
-  - Workflows failed in the last day
+- [ ] Pagination
+- [x] Add overview stats
+  - [ ] Allow to change between hourly/daily
 - [ ] Finish readme
+- [ ] Tests (JobNameResolver)
 
-Advanced:
-- [ ] Publish a migration with db indexes for this dashboard.
+#### Advanced:
+- [ ] Publish a migration with db indexes for this dashboard. (or not)
 - [ ] Re-try failed workflow.
 - [ ] Show elapsed time between started (added to the queue) and finished.
-  - The main drive here is to see which jobs are the slowest.
+- [ ] Upgrade to Vue 3
+
+- Provide a way to detect the slowest Jobs
 
 ## Credits
 
