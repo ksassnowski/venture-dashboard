@@ -1,9 +1,10 @@
 <script type="text/ecmascript-6">
-    import _ from 'lodash';
-    import moment from 'moment';
+    import StatsCard from '@/Components/StatsCard';
 
     export default {
-        components: {},
+        components: {
+            StatsCard,
+        },
 
 
         /**
@@ -152,11 +153,11 @@
         </div>
 
         <div class="grid grid-cols-5 gap-4 mb-5">
-            <stats-card title="Total Pending Workflows" :loading="loading" :state="totalPendingState">{{ stats.totalPending }}</stats-card>
-            <stats-card title="Non-Started Workflows" :loading="loading" :state="nonStartedState">{{ stats.totalNonStarted }}</stats-card>
-            <stats-card :title="`Failures in the past ${this.period}`" :state="failuresState" :loading="loading">{{ stats.failed }}</stats-card>
-            <stats-card :title="`Successes in the past ${this.period}`" :loading="loading">{{ stats.successful }}</stats-card>
-            <stats-card :title="`New in the past ${this.period}`" :loading="loading">{{ stats.created }}</stats-card>
+            <StatsCard title="Total Pending Workflows" :loading="loading" :state="totalPendingState">{{ stats.totalPending }}</StatsCard>
+            <StatsCard title="Non-Started Workflows" :loading="loading" :state="nonStartedState">{{ stats.totalNonStarted }}</StatsCard>
+            <StatsCard :title="`Failures in the past ${this.period}`" :state="failuresState" :loading="loading">{{ stats.failed }}</StatsCard>
+            <StatsCard :title="`Successes in the past ${this.period}`" :loading="loading">{{ stats.successful }}</StatsCard>
+            <StatsCard :title="`New in the past ${this.period}`" :loading="loading">{{ stats.created }}</StatsCard>
         </div>
 
         <div class="bg-white rounded-lg shadow pt-1 pb-2">

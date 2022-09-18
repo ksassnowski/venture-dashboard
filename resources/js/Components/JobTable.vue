@@ -1,21 +1,4 @@
-<template>
-    <expandable-table :headers="headers" :items="items">
-        <template v-slot:expanded="{ item }">
-            <div class="pt-4 pb-2">
-                <h3
-                    class="text-base font-semibold tracking-tight text-gray-800 px-4 mb-2"
-                >
-                    Exception
-                </h3>
-
-                <stack-trace :exception="item.exception" />
-            </div>
-        </template>
-    </expandable-table>
-</template>
-
-<script>
-
+<script type="text/ecmascript-6">
 import moment from 'moment';
 import ExpandableTable from "@/Components/ExpandableTable";
 import StackTrace from "@/Components/StackTrace";
@@ -77,3 +60,17 @@ export default {
     }
 };
 </script>
+
+<template>
+    <ExpandableTable :headers="headers" :items="items">
+        <template v-slot:expanded="{ item }">
+            <div class="pt-4 pb-2">
+                <h3 class="text-base font-semibold tracking-tight text-gray-800 px-4 mb-2">
+                    Exception
+                </h3>
+
+                <StackTrace :exception="item.exception" />
+            </div>
+        </template>
+    </ExpandableTable>
+</template>

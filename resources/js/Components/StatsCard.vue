@@ -2,10 +2,6 @@
 export default {
     props: ['title', 'loading', 'state'],
 
-    data() {
-        return {};
-    },
-
     computed: {
         background() {
             switch (this.state) {
@@ -27,7 +23,7 @@ export default {
     <div class="block p-6 max-w-sm rounded-lg border border-gray-200 shadow-md" :class="[background]">
         <div class="flex flex-col justify-center items-center">
             <dt v-if="!loading" class="mb-2 text-3xl font-extrabold">
-                <slot />
+                <slot/>
             </dt>
             <dt v-if="loading" class="mb-2 text-3xl font-extrabold">
                 <svg class="inline mr-2 w-4 h-4 text-gray-200 animate-spin dark:text-gray-600 fill-blue-600"

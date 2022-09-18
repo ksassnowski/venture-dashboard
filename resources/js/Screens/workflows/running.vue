@@ -1,62 +1,46 @@
 <script type="text/ecmascript-6">
-    import moment from 'moment';
+export default {
+    data() {
+        return {
+            ready: false,
+            workflows: [],
+            autoRefresh: true,
+        };
+    },
 
-    export default {
-        /**
-         * The component's data.
-         */
-        data() {
-            return {
-                ready: false,
-                workflows: [],
-                autoRefresh: true,
-            };
+    mounted() {
+        document.title = "Venture Dashboard - Workflows : Running";
+
+        this.loadWorkflows();
+        this.refresh();
+    },
+
+    destroyed() {
+        clearTimeout(this.timeout);
+    },
+
+    methods: {
+        loadWorkflows() {
+            return this.$http.get(VentureDashboard.basePath + '/api/workflows')
+                .then(response => {
+                    this.workflows = response.data.data;
+
+                    this.ready = true;
+                });
         },
 
+        refresh() {
+            this.timeout = setTimeout(async ()  => {
 
-        /**
-         * Prepare the component.
-         */
-        mounted() {
-            document.title = "Venture Dashboard - Workflows : Running";
+                if (this.autoRefresh) {
+                    await this.loadWorkflows();
+                }
 
-            this.loadWorkflows();
-            this.refresh();
+                this.refresh();
+            }, 5000);
         },
-
-        destroyed() {
-            clearTimeout(this.timeout);
-        },
-
-
-        methods: {
-            /**
-             * Load the monitored tags.
-             */
-            loadWorkflows() {
-                return this.$http.get(VentureDashboard.basePath + '/api/workflows')
-                    .then(response => {
-                        this.workflows = response.data.data;
-
-                        this.ready = true;
-                    });
-            },
-
-            /**
-             * Refresh the stats every period of time.
-             */
-            refresh() {
-                this.timeout = setTimeout(async ()  => {
-
-                    if (this.autoRefresh) {
-                        await this.loadWorkflows();
-                    }
-
-                    this.refresh();
-                }, 5000);
-            },
-        }
     }
+}
 </script>
 
 <template>

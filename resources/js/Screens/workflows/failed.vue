@@ -1,44 +1,33 @@
 <script type="text/ecmascript-6">
-    export default {
-        /**
-         * The component's data.
-         */
-        data() {
-            return {
-                ready: false,
-                loading: true,
-                workflows: [],
-            };
+export default {
+    data() {
+        return {
+            ready: false,
+            loading: true,
+            workflows: [],
+        };
+    },
+
+    mounted() {
+        document.title = "Venture Dashboard - Workflows : Failed";
+
+        this.loadWorkflows();
+    },
+
+    methods: {
+        loadWorkflows() {
+            this.loading = true;
+
+            this.$http.get(VentureDashboard.basePath + '/api/workflows/failed')
+                .then(response => {
+                    this.workflows = response.data.data;
+
+                    this.ready = true;
+                    this.loading = false;
+                });
         },
-
-
-        /**
-         * Prepare the component.
-         */
-        mounted() {
-            document.title = "Venture Dashboard - Workflows : Failed";
-
-            this.loadWorkflows();
-        },
-
-
-        methods: {
-            /**
-             * Load the monitored tags.
-             */
-            loadWorkflows() {
-                this.loading = true;
-
-                this.$http.get(VentureDashboard.basePath + '/api/workflows/failed')
-                    .then(response => {
-                        this.workflows = response.data.data;
-
-                        this.ready = true;
-                        this.loading = false;
-                    });
-            },
-        }
     }
+}
 </script>
 
 <template>
