@@ -1,102 +1,43 @@
-<template>
-    <div class="w-full h-full" ref="graph"></div>
-</template>
-
-<script>
-import cytoscape from "cytoscape";
+<script type="text/ecmascript-6">
+import mermaid from 'mermaid';
+import {definitionToMermaid, relationsToMermaid, statusToMermaid} from '../utils/mermaid';
 
 export default {
-    name: "WorkflowGraph",
+    props: ['id', 'definition', 'relations', 'status'],
 
-    props: {
-        graph: {
-            type: Object,
-            required: true,
-        },
-    },
-
-    computed: {
-        elements() {
-            return Object.keys(this.graph).reduce((elems, key) => {
-                const vertex = this.graph[key];
-
-                elems.push({
-                    data: {
-                        id: key,
-                        label: vertex.name,
-                        failedAt: vertex.failed_at,
-                        finishedAt: vertex.finished_at,
-                        createdAt: vertex.created_at,
-                        exception: vertex.exception,
-                    },
-                });
-
-                vertex.edges.forEach((edge) => {
-                    elems.push({
-                        data: {
-                            source: key,
-                            target: edge,
-                        },
-                    });
-                });
-
-                return elems;
-            }, []);
-        },
+    data() {
+        return {}
     },
 
     methods: {
-        nodeBackgroundColor(elem) {
-            if (elem.data("failedAt") !== null) {
-                return "rgb(245, 101, 101)";
-            }
+        render() {
+            this.$refs.graph.removeAttribute('data-processed');
+            this.$refs.graph.innerHTML = this.graph;
+            mermaid.init(this.$refs.graph);
+        }
+    },
 
-            if (elem.data("finishedAt") !== null) {
-                return "rgb(72, 187, 120)";
-            }
-
-            return "#999";
-        },
+    computed: {
+        graph() {
+            return `graph TD
+                ${definitionToMermaid(this.definition)}
+                ${relationsToMermaid(this.relations)}
+                ${statusToMermaid(this.status)}`;
+        }
     },
 
     mounted() {
-        const cy = cytoscape({
-            container: this.$refs.graph,
-
-            elements: this.elements,
-
-            style: [
-                {
-                    selector: "node",
-                    style: {
-                        "background-color": this.nodeBackgroundColor,
-                        label: "data(label)",
-                        "text-wrap": "wrap",
-                        "text-max-width": "170px",
-                        "text-margin-y": "-12px",
-                    },
-                },
-
-                {
-                    selector: "edge",
-                    style: {
-                        width: 2,
-                        "line-color": "#ccc",
-                        "target-arrow-color": "#ccc",
-                        "target-arrow-shape": "triangle",
-                        "curve-style": "bezier",
-                    },
-                },
-            ],
-
-            layout: {
-                name: "breadthfirst",
-                grid: true,
-                directed: true,
-                maximal: true,
-                spacingFactor: 2.25,
-            },
-        });
+        this.render();
     },
-};
+
+    updated() {
+        this.render();
+    }
+}
 </script>
+
+<template>
+    <div class="w-full h-full graph" ref="graph">
+        {{ graph }}
+    </div>
+</template>

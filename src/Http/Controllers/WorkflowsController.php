@@ -1,57 +1,49 @@
-<?php declare(strict_types=1);
+<?php
+
+declare(strict_types=1);
 
 namespace Sassnowski\Venture\Dashboard\Http\Controllers;
 
-use Illuminate\Contracts\View\View;
+use Sassnowski\Venture\Dashboard\Http\Resources\WorkflowListItemResource;
+use Sassnowski\Venture\Dashboard\Http\Resources\WorkflowResource;
+use Sassnowski\Venture\Dashboard\Queries\FailedWorkflowsQuery;
+use Sassnowski\Venture\Dashboard\Queries\PendingWorkflowsQuery;
+use Sassnowski\Venture\Dashboard\Queries\SuccessfulWorkflowsQuery;
 use Sassnowski\Venture\Models\Workflow;
-use Sassnowski\Venture\Models\WorkflowJob;
 
-class WorkflowsController extends Controller
+class WorkflowsController
 {
-    public function show(Workflow $workflow): View
+    public function show(Workflow $workflow)
     {
-        return view('venture-dashboard::workflows.show', [
-            'workflow' => $workflow,
-            'graph' => $workflow->asAdjacencyList(),
-            'table' => [
-                'headers' => [
-                    ['text' => 'Name', 'align' => 'left'],
-                    ['text' => 'Finished at', 'align' => 'right'],
-                    ['text' => 'Failed at', 'align' => 'right'],
-                ],
-                'items' => $workflow->jobs
-                    ->map(fn (WorkflowJob $job) => [
-                        $job->name,
-                        optional($job->finished_at)->format('Y-m-d H:i'),
-                        optional($job->failed_at)->format('Y-m-d H:i'),
-                    ])
-            ],
-        ]);
+        $workflow->loadMissing('jobs');
+
+        return WorkflowResource::make($workflow);
     }
 
-    public function running(): View
+    public function running()
     {
-        return view('venture-dashboard::workflows.index', [
-            'workflows' => Workflow::whereNull('finished_at')
-                ->where('jobs_failed', 0)
-                ->get(),
-        ]);
+        $workflows = (new PendingWorkflowsQuery())->get();
+
+        return WorkflowListItemResource::collection(
+            $workflows
+        );
     }
 
-    public function failed(): View
+    public function failed()
     {
-        return view('venture-dashboard::workflows.failed', [
-            'workflows' => Workflow::with('jobs')
-                ->whereNull('finished_at')
-                ->where('jobs_failed', '>', 0)
-                ->get(),
-        ]);
+        $workflows = (new FailedWorkflowsQuery())->get();
+
+        return WorkflowListItemResource::collection(
+            $workflows
+        );
     }
 
-    public function finished(): View
+    public function finished()
     {
-        return view('venture-dashboard::workflows.finished', [
-            'workflows' => Workflow::whereNotNull('finished_at')->get(),
-        ]);
+        $workflows = (new SuccessfulWorkflowsQuery())->get();
+
+        return WorkflowListItemResource::collection(
+            $workflows
+        );
     }
 }
