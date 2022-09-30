@@ -10,8 +10,14 @@ use RuntimeException;
 
 class Dashboard
 {
-    public static $authUsing = null;
+    /** @var callable|null */
+    private static $authUsing = null;
 
+    private static string $path = 'venture';
+
+    /**
+     * @param  callable(Request): bool  $callback
+     */
     public static function auth(callable $callback): void
     {
         static::$authUsing = $callback;
@@ -24,10 +30,20 @@ class Dashboard
         })($request);
     }
 
+    public static function setRoutePath(string $path): void
+    {
+        self::$path = $path;
+    }
+
+    public static function getRoutePath(): string
+    {
+        return self::$path;
+    }
+
     public static function scriptVariables(): array
     {
         return [
-            'path' => 'venture',
+            'path' => self::$path,
         ];
     }
 

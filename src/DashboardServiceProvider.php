@@ -21,14 +21,22 @@ class DashboardServiceProvider extends ServiceProvider
 
     private function defineAssetPublishing(): void
     {
+        if (! $this->app->runningInConsole()) {
+            return;
+        }
+
         $this->publishes([
             __DIR__.'/../public' => public_path('vendor/venture-dashboard'),
         ], 'venture-dashboard-assets');
+
+        $this->publishes([
+            __DIR__.'/../stubs/VentureDashboardServiceProvider.stub' => app_path('Providers/VentureDashboardServiceProvider.php'),
+        ], 'venture-dashboard-provider');
     }
 
     private function registerRoutes(): void
     {
-        Route::prefix('venture')
+        Route::prefix(Dashboard::getRoutePath())
             ->name('venture.dashboard.')
             ->middleware([
                 'web',
@@ -50,6 +58,7 @@ class DashboardServiceProvider extends ServiceProvider
         if ($this->app->runningInConsole()) {
             $this->commands([
                 Console\PublishCommand::class,
+                Console\InstallCommand::class,
             ]);
         }
     }

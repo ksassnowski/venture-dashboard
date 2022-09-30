@@ -1,0 +1,33 @@
+<?php
+
+namespace App\Providers;
+
+use Illuminate\Http\Request;
+use Sassnowski\Venture\Dashboard\Dashboard;
+use Sassnowski\Venture\Dashboard\VentureDashboardServiceProvider as ServiceProvider;
+
+class VentureDashboardServiceProvider extends ServiceProvider
+{
+    /**
+     * Bootstrap any application services.
+     *
+     * @return void
+     */
+    public function boot()
+    {
+        parent::boot();
+
+        /**
+         * Register the Venture Dashboard auth callback.
+         *
+         * This callback determines who can access the dashboard in non-local environments.
+         */
+        Dashboard::auth(function (Request $request): bool {
+            return in_array($request->user()->email, [
+                //
+            ]);
+        });
+
+        Dashboard::setRoutePath('venture');
+    }
+}
